@@ -8,7 +8,7 @@ struct foo {
 
 int main(int argc, char const *argv[])
 {
-    printf("Malloc Implementation\n\n");
+    printf("malloc implementation\n\n");
 
     struct foo *test1 = create(sizeof(struct foo));
     test1->a = 10;
@@ -29,7 +29,11 @@ int main(int argc, char const *argv[])
     test4->b = 55;
 
     free_block(test1);
+    free_block(test4);
     free_block(test3);
 
+    int *test5 = create(100);
+    printf("%d", test5[0]);
+    free_block(test5);
     return 0;
 }

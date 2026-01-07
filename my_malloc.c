@@ -1,4 +1,5 @@
 #include "my_malloc.h"
+#include <string.h>
 #include <unistd.h>
 
 void* create(size_t size) {
@@ -21,18 +22,20 @@ void* create(size_t size) {
     }
     else {
         while (curr->next != NULL) {
-            if (curr->next->free == 1 && curr->next->size >= size) {
-                block = curr->next;
+            if (curr->free == 1 && curr->size >= size) {
+                block = curr;
                 block->free = 0;
                 user = (void *)(block + 1);
                 printf("Metadata at     : %p\n", block);
                 printf("User memory at  : %p\n\n", user);
+                memset(user, 0, size);
                 return user;
             }
             curr = curr->next;
         }
         curr->next = block;
     }
+    memset(user, 0, size);
     printf("Metadata at     : %p\n", block);
     printf("User memory at  : %p\n\n", user);
     return user;
