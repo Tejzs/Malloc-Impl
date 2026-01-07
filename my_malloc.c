@@ -2,8 +2,7 @@
 #include <unistd.h>
 
 void* create(size_t size) {
-    void *p
-    = sbrk(sizeof(t_block) + size);
+    void *p = sbrk(sizeof(t_block) + size);
     if (p == (void*)-1) {
         return NULL;
     }
