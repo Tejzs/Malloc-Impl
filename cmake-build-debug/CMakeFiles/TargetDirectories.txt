@@ -1,3 +1,0 @@
-/home/tejas/Projects/malloc_impl/cmake-build-debug/CMakeFiles/malloc_impl.dir
-/home/tejas/Projects/malloc_impl/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/tejas/Projects/malloc_impl/cmake-build-debug/CMakeFiles/rebuild_cache.dir
