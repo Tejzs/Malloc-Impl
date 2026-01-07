@@ -41,6 +41,13 @@ void* create(size_t size) {
     return user;
 }
 
+// Returns a pointer to the metadata block corresponding to the user pointer
+t_block* get_metadata(void *ptr) {
+    if (ptr == NULL) {return NULL;}
+    t_block *metadata = (t_block *)((char *)ptr - sizeof(t_block));
+    return metadata;
+}
+
 int free_block(void *ptr) {
     if (ptr == NULL) {return -1;}
     t_block *block = get_metadata(ptr);
@@ -51,8 +58,3 @@ int free_block(void *ptr) {
     return -1;
 }
 
-t_block* get_metadata(void *ptr) {
-    if (ptr == NULL) {return NULL;}
-    t_block *metadata = (t_block *)((char *)ptr - sizeof(t_block));
-    return metadata;
-}

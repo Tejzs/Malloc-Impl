@@ -20,7 +20,4 @@ extern void* create(size_t size);
 // Frees the previously allocated memory pointed to by ptr
 // Returns 1 on success, -1 if ptr is invalid
 extern int free_block(void *ptr);
-// Returns a pointer to the metadata block corresponding to the user pointer
-static t_block* get_metadata(void *ptr);
-
-#endif 
+#endif
