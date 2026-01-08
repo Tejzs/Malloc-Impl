@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "my_malloc.h"
 
 struct foo {
@@ -6,10 +5,8 @@ struct foo {
     int b;
 };
 
-int main(int argc, char const *argv[])
-{
-    printf("malloc implementation\n\n");
-
+int main(int argc, char const *argv[]) {
+    init_debug();
     struct foo *test1 = create(sizeof(struct foo));
     test1->a = 10;
     test1->b = 20;
@@ -28,12 +25,12 @@ int main(int argc, char const *argv[])
     test4->a = 66;
     test4->b = 55;
 
-    free_block(test1);
+    // free_block(test1);
     free_block(test4);
     free_block(test3);
 
     int *test5 = create(100);
-    printf("%d", test5[0]);
     free_block(test5);
+
     return 0;
 }
