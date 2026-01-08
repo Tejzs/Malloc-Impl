@@ -15,17 +15,17 @@ int main(int argc, char const *argv[]) {
     test2->a = 1;
     test2->b = 2;
 
+    test2 = recreate(test2, sizeof(struct foo)  - 8);
+
     struct foo *test3 = create(sizeof(struct foo));
     test3->a = 66;
     test3->b = 55;
-
-    free_block(test2);
 
     struct foo *test4 = create(sizeof(struct foo));
     test4->a = 66;
     test4->b = 55;
 
-    // free_block(test1);
+    free_block(test1);
     free_block(test4);
     free_block(test3);
 

@@ -2,6 +2,13 @@
 #include <string.h>
 #include <unistd.h>
 
+// Returns a pointer to the metadata block corresponding to the user pointer
+t_block *get_metadata(void *ptr) {
+    if (ptr == NULL) { return NULL; }
+    t_block *metadata = (t_block *) ((char *) ptr - sizeof(t_block));
+    return metadata;
+}
+
 void *create(size_t size) {
     void *p = sbrk(sizeof(t_block) + size);
     if (p == (void *) -1) {
@@ -31,6 +38,14 @@ void *create(size_t size) {
             }
             curr = curr->next;
         }
+        if (curr->free == 1 && curr->size >= size) {
+            block = curr;
+            block->free = 0;
+            user = (void *) (block + 1);
+            memset(user, 0, size);
+            total_allocated++;
+            return user;
+        }
         curr->next = block;
     }
     memset(user, 0, size);
@@ -38,11 +53,32 @@ void *create(size_t size) {
     return user;
 }
 
-// Returns a pointer to the metadata block corresponding to the user pointer
-t_block *get_metadata(void *ptr) {
-    if (ptr == NULL) { return NULL; }
-    t_block *metadata = (t_block *) ((char *) ptr - sizeof(t_block));
-    return metadata;
+void *recreate(void *ptr, size_t size) {
+    if (ptr == NULL) {
+        return create(size);
+    }
+
+    if (size == 0) {
+        free_block(ptr);
+        return ptr;
+    }
+
+    t_block *block = get_metadata(ptr);
+    if (size <= block->size) {
+        return ptr;
+    }
+
+    void *p = create(size);
+    if (!p) {return NULL;}
+    total_allocated--;
+    size_t copy_size = 0;
+    if (block->size < size) copy_size = block->size;
+    else copy_size = size;
+    memcpy(p, ptr, copy_size);
+
+    free_block(ptr);
+    total_freed--;
+    return p;
 }
 
 int free_block(void *ptr) {

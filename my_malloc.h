@@ -21,6 +21,8 @@ static t_block *head = NULL;
 
 // Allocates memory of the given size in the heap and returns a pointer to it
 extern void *create(size_t size);
+// Reallocates memory of the given memory space and size in the heap and returns a pointer to it
+extern void *recreate(void *ptr, size_t size);
 
 // Frees the previously allocated memory pointed to by ptr
 // Returns 1 on success, -1 if ptr is invalid
