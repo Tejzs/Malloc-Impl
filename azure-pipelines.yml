@@ -15,3 +15,10 @@ steps:
 
   - script: cmake --build build
     displayName: 'Build'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifact'
+    inputs:
+      PathtoPublish: 'build/malloc_impl'
+      ArtifactName: 'malloc_impl'
+      publishLocation: 'Container'
