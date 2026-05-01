@@ -7,3 +7,15 @@ add_executable(malloc_impl
         main.c
         my_malloc.c
 )
+
+# Enable CTest
+enable_testing()
+
+# Test executable
+add_executable(test_malloc
+        test_malloc.c
+        my_malloc.c
+)
+
+# Register with CTest
+add_test(NAME MallocTests COMMAND test_malloc)
