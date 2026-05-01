@@ -4,25 +4,14 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: Default
+  name: Default
 
 steps:
-  - task: CMake@1
+  - script: cmake -B build
     displayName: 'Configure'
-    inputs:
-      workingDirectory: 'build'
-      cmakeArgs: '..'
 
-  - task: CMake@1
+  - script: cmake --build build
     displayName: 'Build'
-    inputs:
-      workingDirectory: 'build'
-      cmakeArgs: '--build .'
-
-  - script: |
-      cd build
-      ./malloc_impl
-    displayName: 'Run'
