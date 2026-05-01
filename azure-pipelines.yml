@@ -16,6 +16,11 @@ steps:
   - script: cmake --build build
     displayName: 'Build'
 
+  - script: |
+      cd build
+      ctest --output-on-failure
+    displayName: 'Run Tests'
+    
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifact'
     inputs:
