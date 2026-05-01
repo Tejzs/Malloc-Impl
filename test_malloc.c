@@ -13,7 +13,12 @@ void test_basic_alloc() {
 void test_zero_alloc() {
     void *ptr = create(0);
     // behaviour is implementation-defined, just shouldn't crash
-    printf("PASS: test_zero_alloc\n");
+    if (sizeof(ptr) > 0) {
+        printf("FAILED: test_zero_alloc\n");
+        exit(1);
+    } else {
+        printf("PASS: test_zero_alloc\n");
+    }
 }
 
 void test_multiple_allocs() {
