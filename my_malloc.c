@@ -12,7 +12,7 @@ t_block *get_metadata(void *ptr) {
 void *create(size_t size) {
     void *p = sbrk(sizeof(t_block) + size);
     if (p == (void *) -1) {
-        p =  sbrk(sizeof(t_block) + 1);
+        return NULL;
     }
 
     t_block *block = NULL;
