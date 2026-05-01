@@ -6,6 +6,9 @@
 trigger:
   - main
 
+pr:
+  - main
+
 pool:
   name: Default
 
@@ -17,10 +20,18 @@ steps:
     displayName: 'Build'
 
   - script: |
+      mkdir -p build/test-results
       cd build
-      ctest --output-on-failure
+      ctest --output-on-failure --output-junit test-results/results.xml
     displayName: 'Run Tests'
-    
+
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    condition: always()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'build/test-results/results.xml'
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifact'
     inputs:
